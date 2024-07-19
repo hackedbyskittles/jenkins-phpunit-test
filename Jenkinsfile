@@ -18,6 +18,8 @@ pipeline {
 				sh 'apt-get update'
                         	sh 'apt-get install -y php8.2-mysql php8.2-gd php8.2-curl unzip default-mysql-client nodejs npm '
 
+				sh 'curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer'
+
 				sh 'composer install --no-interaction --prefer-dist'  
                         	sh 'composer update mews/captcha --no-interaction --prefer-dist'
                         	sh 'composer update --dev orchestra/testbench --no-interaction --prefer-dist'
