@@ -1,10 +1,10 @@
 pipeline {
-	// agent any
-	agent {
-		docker {
-			image 'composer:latest'
-		}
-	}
+	agent any
+	// agent {
+	// 	docker {
+	// 		image 'composer:latest'
+	// 	}
+	// }
 	stages {
 		// stage('Pull Docker Image'){
 		// 	steps {
@@ -15,8 +15,15 @@ pipeline {
 		// }
 		stage('Build') {
 			steps {
+				sh 'apt-get update'
+                        	sh 'apt-get install -y php8.2-mysql php8.2-gd php8.2-curl unzip default-mysql-client nodejs npm '
+
+				sh 'composer install --no-interaction --prefer-dist'  
+                        	sh 'composer update mews/captcha --no-interaction --prefer-dist'
+                        	sh 'composer update --dev orchestra/testbench --no-interaction --prefer-dist'
+
 				// sh 'docker pull composer:latest'
-				sh 'composer install'
+				// sh 'composer install'
 			}
 		}
 		stage('Test') {
